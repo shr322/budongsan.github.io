@@ -13,7 +13,7 @@
       </div>
 
       <div class="estate__content">
-
+        <!-- 매물타입 -->
         <div class="estate__view--type">
           <ul class="estate__view--type-wrap">
             <li class="estate__view--type-item estate__view--type-all active">
@@ -34,13 +34,13 @@
                 <span class="estate__view--type-txt">대전</span>
               </a>
             </li>
-            <li class="estate__view--type-item estate__view--type-daejeon">
+            <li class="estate__view--type-item estate__view--type-daegu">
               <a href="#" class="estate__view--type-link">
                 <i class="estate__view--type-icon"><img src="" alt="" /></i>
                 <span class="estate__view--type-txt">대구</span>
               </a>
             </li>
-            <li class="estate__view--type-item estate__view--type-daejeon">
+            <li class="estate__view--type-item estate__view--type-busan">
               <a href="#" class="estate__view--type-link">
                 <i class="estate__view--type-icon"><img src="" alt="" /></i>
                 <span class="estate__view--type-txt">부산</span>
@@ -48,67 +48,127 @@
             </li>
           </ul>
         </div>
+        <!-- //매물타입 -->
 
+        <!-- 배너 -->
+        <div class="container">
+          <a href="#" class="estate__view--banner">
+            <img src="../img/banner.jpg" alt="" />
+          </a>
+        </div>
+        <!-- //배너 -->
+
+        <!-- 매물리스트 -->
         <div class="container">
           <div class="estate__view--list">
-            <ul class="estate__view--list-wrap">
-              <li class="estate__view--list-item estate__view--list-seoul">
-                <a href="#" class="estate__view--list-link">
-                    <div class="estate__view--list-badge"></div>
-                    <div class="estate__view--list-img" style="background-image:url(../img/1.jpg);"></div>
-                    <div class="estate__view--list-info">
-                      <div>홈플러스</div>
-                      <div>전주최대</div>
-                      <div>
-                        <span>준공</span>
-                        <span>대지면적</span>
-                        <span>연면적</span>
-                      </div>
-
+            <ul class="estate__view--list-wrap" id="estateList">
+              <!-- <li class="estate__view--list-item estate__view--list-seoul">
+                <a href="" class="estate__view--list-link">
+                  <div
+                    class="estate__view--list-badge estate__view--list-badge1"
+                  >
+                    매매
+                  </div>
+                  <div
+                    class="estate__view--list-img"
+                    style="background-image: url(../img/1.jpg)"
+                  ></div>
+                  <div class="estate__view--list-info">
+                    <div>홈플러스</div>
+                    <div>전주최대</div>
+                    <div>
+                      <span>준공</span>
+                      <span>대지면적</span>
+                      <span>연면적</span>
                     </div>
+                  </div>
                 </a>
-              </li>
-              <li class="estate__view--list-item estate__view--list-seoul">
-                <a href="#" class="estate__view--list-link">
-                    <div class="estate__view--list-badge"></div>
-                    <div class="estate__view--list-img" style="background-image:url(../img/1.jpg);"></div>
-                    <div class="estate__view--list-info">
-                      <div>홈플러스</div>
-                      <div>전주최대</div>
-                      <div>
-                        <span>준공</span>
-                        <span>대지면적</span>
-                        <span>연면적</span>
-                      </div>
-
-                    </div>
-                </a>
-              </li>
-              <li class="estate__view--list-item estate__view--list-seoul">
-                <a href="#" class="estate__view--list-link">
-                    <div class="estate__view--list-badge"></div>
-                    <div class="estate__view--list-img" style="background-image:url(../img/1.jpg);"></div>
-                    <div class="estate__view--list-info">
-                      <div>홈플러스</div>
-                      <div>전주최대</div>
-                      <div>
-                        <span>준공</span>
-                        <span>대지면적</span>
-                        <span>연면적</span>
-                      </div>
-
-                    </div>
-                </a>
-              </li>
-              
+              </li> -->
             </ul>
           </div>
         </div>
-
-
+        <!-- //매물리스트 -->
       </div>
     </div>
 
-    <script></script>
+    <script>
+      async function loadEstateData() {
+        try {
+          const response = await fetch("../json/listData.json"); // JSON 파일 불러오기
+          const estates = await response.json(); // JSON 데이터를 JavaScript 객체로 변환
+          const estateList = document.getElementById("estateList");
+
+          estates.forEach((estate) => {
+            const listItem = document.createElement("li");
+            listItem.className = `estate__view--list-item estate__view--list-${estate.region}`;
+            listItem.innerHTML = `
+              <a href="${estate.link}.html" class="estate__view--list-link">
+                <div class="estate__view--list-badge ${
+                  estate.badge === "매매"
+                    ? "estate__view--list-badge1"
+                    : estate.badge === "임대"
+                    ? "estate__view--list-badge2"
+                    : ""
+                }">${estate.badge}</div>
+                <div class="estate__view--list-img" style="background-image: url(${
+                  estate.img
+                })"></div>
+                <div class="estate__view--list-info">
+                  <div class="estate__view--list-tit">${estate.title}</div>
+                  <div class="estate__view--list-sub-tit">${
+                    estate.subtitle
+                  }</div>
+                  <div class="estate__view--list-txt">
+                    ${estate.info
+                      .map((item) => `<span>${item}</span>`)
+                      .join("")}
+                  </div>
+                </div>
+              </a>
+            `;
+            estateList.appendChild(listItem);
+          });
+
+          // JSON 데이터가 로드된 후 필터링 이벤트 추가
+          setupFilter();
+        } catch (error) {
+          console.error("Error loading estate data:", error);
+        }
+      }
+
+      function setupFilter() {
+        const typeItems = document.querySelectorAll(".estate__view--type-item");
+        const listItems = document.querySelectorAll(".estate__view--list-item");
+
+        typeItems.forEach((typeItem) => {
+          typeItem.addEventListener("click", function () {
+            const filterClass = typeItem.classList[1].replace(
+              "estate__view--type-",
+              "estate__view--list-"
+            );
+
+            if (filterClass === "estate__view--list-all") {
+              listItems.forEach((item) => {
+                item.style.display = "block";
+              });
+            } else {
+              listItems.forEach((item) => {
+                item.style.display = item.classList.contains(filterClass)
+                  ? "block"
+                  : "none";
+              });
+            }
+
+            // 현재 활성화된 필터에 "active" 클래스 추가 및 다른 필터에서는 제거
+            typeItems.forEach((el) => el.classList.remove("active"));
+            typeItem.classList.add("active");
+          });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        loadEstateData(); // JSON 데이터를 로드하고 필터링 이벤트를 설정합니다.
+      });
+    </script>
   </body>
 </html>
