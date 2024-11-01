@@ -1,11 +1,66 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상세</title>
-</head>
-<body>
-  작업중
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>매물 정보</title>
+  </head>
+  <body>
+    <div id="property-info">
+      <!-- 데이터가 표시될 영역 -->
+    </div>
+
+    <script>
+      // URL에서 파라미터 값을 추출하는 함수
+      function getLinkFromURL() {
+        const url = window.location.href;
+        const linkValue = url.split("?")[1]; // '?' 뒤의 값만 추출
+        return linkValue || null; // 값이 없으면 null 반환
+      }
+
+      // 사용 예시
+      const linkValue = getLinkFromURL();
+      console.log(linkValue); // '10001' 출력 예상
+
+      // JSON 파일에서 데이터를 가져오고 `link` 값에 해당하는 객체를 찾는 함수
+      async function loadPropertyData() {
+        const linkValue = getLinkFromURL();
+
+        try {
+          const response = await fetch("../json/listData.json"); // JSON 파일 경로
+          const data = await response.json();
+
+          // `link` 값이 일치하는 객체 찾기
+          const property = data.find((item) => item.link === linkValue);
+
+          if (property) {
+            displayPropertyData(property);
+          } else {
+            document.getElementById("property-info").textContent =
+              "해당 매물을 찾을 수 없습니다.";
+          }
+        } catch (error) {
+          console.error("Error loading JSON:", error);
+          document.getElementById("property-info").textContent =
+            "데이터를 불러오는 중 오류가 발생했습니다.";
+        }
+      }
+
+      // 데이터를 HTML에 표시하는 함수
+      function displayPropertyData(property) {
+        const infoDiv = document.getElementById("property-info");
+        infoDiv.innerHTML = `
+        <h1>${property.title}</h1>
+        <h2>${property.subtitle}</h2>
+        <img src="${property.img}" alt="${property.title}">
+        <p><strong>지역:</strong> ${property.region}</p>
+        <p><strong>배지:</strong> ${property.badge}</p>
+        <p><strong>정보:</strong> ${property.info.join(", ")}</p>
+      `;
+      }
+
+      // 페이지 로드 시 데이터 불러오기
+      loadPropertyData();
+    </script>
+  </body>
 </html>

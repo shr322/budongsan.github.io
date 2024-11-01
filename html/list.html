@@ -131,7 +131,7 @@
             const listItem = document.createElement("li");
             listItem.className = `estate__view--list-item estate__view--list-${estate.region}`;
             listItem.innerHTML = `
-              <a href="${estate.link}.html" class="estate__view--list-link">
+              <a href="view.html?${estate.link}" class="estate__view--list-link">
                 <div class="estate__view--list-badge ${
                   estate.badge === "매매"
                     ? "estate__view--list-badge1"
