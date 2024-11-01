@@ -51,11 +51,11 @@
         <!-- //매물타입 -->
 
         <!-- 배너 -->
-        <div class="container">
+        <!-- <div class="container">
           <a href="#" class="estate__view--banner">
             <img src="../img/banner.jpg" alt="" />
           </a>
-        </div>
+        </div> -->
         <!-- //배너 -->
 
         <!-- 매물리스트 -->
@@ -85,13 +85,42 @@
                 </a>
               </li> -->
             </ul>
+
+            <div class="estate__view--add-box">
+              <p class="estate__view--add-box-tit">기업매물 서비스는</p>
+              <p class="estate__view--add-box-txt">
+                기업매물 서비스는 개인 또는<br />법인 기업 소유의 직거래
+                매물과<br />전속 중개 매물을 다양한 채널을 통해<br />홍보하는
+                서비스입니다.
+              </p>
+
+              <div class="estate__view--add-btns">
+                <a href="https://forms.gle/8ef76ajkRgo2w6Pt5" class="estate__view--add-btn-add">등록신청</a>
+              </div>
+            </div>
           </div>
         </div>
         <!-- //매물리스트 -->
       </div>
+
+      <!-- nav -->
+      <div class="estate__view--nav">
+        <a
+          href="https://forms.gle/8ef76ajkRgo2w6Pt5"
+          target="_blank"
+          class="estate__view--nav-item"
+        >
+          <span>등록</span>
+        </a>
+        <a href="#" class="estate__view--nav-item estate__view--nav-arrow-top"
+          >⬆️</a
+        >
+      </div>
+      <!-- //nav -->
     </div>
 
     <script>
+      /* json에서 data 불러와서 뿌려주기 */
       async function loadEstateData() {
         try {
           const response = await fetch("../json/listData.json"); // JSON 파일 불러오기
@@ -135,7 +164,9 @@
           console.error("Error loading estate data:", error);
         }
       }
+      /* //json에서 data 불러와서 뿌려주기 */
 
+      /* type 클릭 시 해당되는 컨텐츠만 남기 */
       function setupFilter() {
         const typeItems = document.querySelectorAll(".estate__view--type-item");
         const listItems = document.querySelectorAll(".estate__view--list-item");
@@ -165,10 +196,31 @@
           });
         });
       }
+      /* //type 클릭 시 해당되는 컨텐츠만 남기 */
 
       document.addEventListener("DOMContentLoaded", function () {
         loadEstateData(); // JSON 데이터를 로드하고 필터링 이벤트를 설정합니다.
       });
+
+      /* 맨위로 이동 */
+      document
+        .querySelector(".estate__view--nav-arrow-top")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          scrollToTop();
+        });
+
+      function scrollToTop() {
+        const scrollStep = window.scrollY / 15; // 스크롤 속도 조절
+        const scrollInterval = setInterval(() => {
+          if (window.scrollY > 0) {
+            window.scrollBy(0, -scrollStep);
+          } else {
+            clearInterval(scrollInterval);
+          }
+        }, 15); // 15ms 간격으로 스크롤
+      }
+      /* //맨위로 이동 */
     </script>
   </body>
 </html>

@@ -9,21 +9,21 @@
       "info": ["2011 준공", "대지면적 2,935.16평", "연면적 14,404.41평"]
   },
   {
-    "region": "daejeon",
-    "link": "10002",
-    "badge": "매매",
-    "title": "홈플러스 대전효자점",
-    "subtitle": "전주시내 최대규모 대형마트 · 판매시설",
-    "img": "../img/home_plus_img.jpg",
-    "info": ["2011 준공", "대지면적 2,935.16평", "연면적 14,404.41평"]
+      "region": "daejeon",
+      "link": "10002",
+      "badge": "임대",
+      "title": "대전",
+      "subtitle": "텍스트2",
+      "img": "../img/home_plus_img.jpg",
+      "info": ["첫번쨰", "두번쨰", "세번째"]
   },
   {
-    "region": "daegu",
-    "link": "10003",
-    "badge": "매매",
-    "title": "홈플러스 대구효자점",
-    "subtitle": "전주시내 최대규모 대형마트 · 판매시설",
-    "img": "../img/home_plus_img.jpg",
-    "info": ["2011 준공", "대지면적 2,935.16평", "연면적 14,404.41평"]
+      "region": "daegu",
+      "link": "10003",
+      "badge": "매매",
+      "title": "대구",
+      "subtitle": "피곤하다",
+      "img": "../img/home_plus_img.jpg",
+      "info": ["첫번쨰", "두번쨰", "세번째","네번째"]
   }
 ]

@@ -54,6 +54,23 @@ body {background: #efeff0;}
 .estate__view--list-txt span:last-child::before {display: none;}
 /* //목록 */
 
+/* nav */
+.estate__view--nav {position: fixed; bottom: 2rem; right: 1rem; display: flex; flex-direction: column; align-items: center;}
+.estate__view--nav-item {display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; background: rgba(0,0,0,0.5); border-radius: 50%; margin-top: 0.5rem; color: #fff; font-size: 0.875rem;}
+.estate__view--nav-arrow-top {}
+/* //nav */
+
+
+/* 등록신청 박스 */
+.estate__view--add-box {margin-top: 1.25rem; padding: 2rem; background: #243351;}
+.estate__view--add-box-tit {font-size: 1.125rem; color: #fff;}
+.estate__view--add-box-txt {font-size: 0.875rem; font-weight: 300; color: #fff; line-height: 1.4375rem; margin-top: 1rem;}
+.estate__view--add-btns {margin-top: 2rem;}
+.estate__view--add-btns {display: flex;}
+.estate__view--add-btns a {display: flex; justify-content: center; align-items: center; padding: 0.5rem 0; border-radius: 0.25rem; font-weight: bold;}
+.estate__view--add-btn-add {background: #ffca28;color: #222; width: 12rem;}
+/* //등록신청 박스 */
+
 /* //모바일 스타일 */
 
 
